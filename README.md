@@ -2,7 +2,21 @@
 
 An educational petroleum engineering project comparing **gas lift**, **ESPs**, and **sucker-rod pumps** using a simplified common well model.
 
-## Run
+## Deploy on Netlify
+
+The dashboard now runs all calculations in the browser; no Python backend is required for the website.
+
+- Branch: `main`
+- Base directory: leave blank
+- Build command: leave blank
+- Publish directory: `.`
+- Environment variables: none
+
+The browser engine was compared against the Python model across six scenarios, including no flow, runout and supply limitation; all outputs and sweep points matched within numerical tolerance. Python remains available as a reference implementation.
+
+You can also open `index.html` directly in a modern browser.
+
+## Run the optional Python server
 
 Requires Python 3.10+. No third-party packages, API keys or internet needed.
 
@@ -65,7 +79,7 @@ git remote add origin https://github.com/lazy70/liftlab.git
 git push -u origin main
 ```
 
-Alternatively use GitHub's Add file → Upload files with the extracted files. Include `.github/workflows/tests.yml` for CI. The URL is a proposed destination, not confirmation that the repository exists. GitHub Pages alone cannot run the Python backend; run locally or use a Python-capable host. The local server is for personal use, not hardened public deployment.
+Alternatively use GitHub's Add file → Upload files with the extracted files. Include `.github/workflows/tests.yml` for CI. The URL is a proposed destination, not confirmation that the repository exists. The standalone dashboard also works on GitHub Pages. The optional Python backend requires a Python-capable host. The local server is for personal use, not hardened public deployment.
 
 ## References
 
