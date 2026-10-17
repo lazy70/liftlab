@@ -7,11 +7,14 @@ from models import simulate
 
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
-        if self.path not in ('/', '/index.html'):
+        routes = {'/': 'index.html', '/index.html': 'index.html', '/lab.html': 'lab.html', '/engine.js': 'engine.js', '/ml.js': 'ml.js', '/advisor.js': 'advisor.js', '/lab.js': 'lab.js', '/lab.css': 'lab.css'}
+        if self.path not in routes:
             self.send_error(404); return
-        body = Path(__file__).with_name('index.html').read_bytes()
+        name = routes[self.path]
+        body = Path(__file__).with_name(name).read_bytes()
+        mime = 'text/javascript' if name.endswith('.js') else 'text/css' if name.endswith('.css') else 'text/html'
         self.send_response(200)
-        self.send_header('Content-Type','text/html; charset=utf-8')
+        self.send_header('Content-Type',mime+'; charset=utf-8')
         self.send_header('Content-Length',str(len(body)))
         self.end_headers(); self.wfile.write(body)
 

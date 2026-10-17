@@ -1,6 +1,39 @@
-# LiftLab — Artificial Lift Simulator
+# LiftLab — Artificial Lift, Machine Learning and Data Science
 
 An educational petroleum engineering project comparing **gas lift**, **ESPs**, and **sucker-rod pumps** using a simplified common well model.
+
+
+## Version 2: ML / Data Lab and Lift Advisor
+
+Open **[the live ML Lab](https://productionliftlab.netlify.app/lab.html)**, or open `lab.html` locally in a browser. The original simulator links to it.
+
+1. Click **Load synthetic demo**, or upload your own CSV and declare its provenance.
+2. Select a method and inspect data quality, feature summaries and correlations.
+3. Click **Train selected method** to fit ridge regression and evaluate on held-out wells.
+4. Review MAE, RMSE, R², baseline performance, residual plots and learned coefficients.
+5. Enter a scenario and infrastructure constraints. Compare the physics estimate with the trained ML estimate.
+6. Ask the **Lift Advisor** why the selected method might be unsuitable or which checks are needed.
+
+The model learns rate predictions from data. The advisor is an explainable **rule-based bot**, not an LLM or trained method-selection model. Synthetic demo labels come from the teaching equations and do not prove field accuracy. See [ML_MODEL_CARD.md](ML_MODEL_CARD.md) for the full data contract, algorithm and limitations.
+
+CSV template headers:
+
+```csv
+well_id,method,reservoir_mpa,depth_m,density,whp_mpa,pi,friction,injection,frequency,stages,diameter,stroke,spm,fillage,liquid_rate
+```
+
+Equipment fields irrelevant to a row's method can be blank. At least 30 valid records and 5 wells per method are required. Use the same anonymized well ID across repeated observations. Units and accepted ranges are displayed in the Lab. Training, upload parsing and conversation run locally without an API key. The app does not upload CSV contents. Reloading clears the in-memory data/models.
+
+New files: `engine.js` (shared physics), `ml.js` (regression/data checks), `advisor.js` (rules), `lab.html`, `lab.css`, `lab.js` (interface), and `tests/test_ml.js`.
+
+Run both test suites from the repository root:
+
+```bash
+python -m unittest discover -s tests -v
+node tests/test_ml.js
+```
+
+Node.js is needed only for JavaScript tests. The deployed site needs no build command and publish directory remains `.`.
 
 ## Deploy on Netlify
 
